@@ -1,5 +1,8 @@
 .venv/
 data/*.mp4
 outputs/*.json
+!outputs/events.json
 __pycache__/
 *.pyc
+*.pt
+.ultralytics/
