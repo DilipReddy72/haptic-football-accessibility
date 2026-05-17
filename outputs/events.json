@@ -1,0 +1,1052 @@
+[
+  {
+    "timestamp_sec": 6.14,
+    "event": "ball_movement",
+    "pixel_speed": 2568.88,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 6.44,
+    "event": "ball_movement",
+    "pixel_speed": 750.43,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 6.71,
+    "event": "ball_movement",
+    "pixel_speed": 1863.39,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 6.87,
+    "event": "ball_movement",
+    "pixel_speed": 1173.03,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 6.91,
+    "event": "ball_movement",
+    "pixel_speed": 669.84,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 6.94,
+    "event": "ball_movement",
+    "pixel_speed": 726.85,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 6.97,
+    "event": "ball_movement",
+    "pixel_speed": 410.02,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 7.01,
+    "event": "ball_movement",
+    "pixel_speed": 118.02,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 7.04,
+    "event": "ball_movement",
+    "pixel_speed": 198.68,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 7.07,
+    "event": "ball_movement",
+    "pixel_speed": 272.47,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 7.14,
+    "event": "ball_movement",
+    "pixel_speed": 109.16,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 7.17,
+    "event": "ball_movement",
+    "pixel_speed": 176.62,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 7.21,
+    "event": "ball_movement",
+    "pixel_speed": 57.38,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 7.24,
+    "event": "ball_movement",
+    "pixel_speed": 729.05,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 7.27,
+    "event": "ball_movement",
+    "pixel_speed": 1017.32,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 7.31,
+    "event": "ball_movement",
+    "pixel_speed": 1228.5,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 7.37,
+    "event": "ball_movement",
+    "pixel_speed": 1668.29,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 7.41,
+    "event": "ball_movement",
+    "pixel_speed": 281.38,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 8.07,
+    "event": "ball_movement",
+    "pixel_speed": 5033.59,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 8.14,
+    "event": "ball_movement",
+    "pixel_speed": 999.01,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 8.24,
+    "event": "ball_movement",
+    "pixel_speed": 752.12,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 8.27,
+    "event": "ball_movement",
+    "pixel_speed": 253,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 8.38,
+    "event": "ball_movement",
+    "pixel_speed": 905.74,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 8.41,
+    "event": "ball_movement",
+    "pixel_speed": 196.09,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 8.44,
+    "event": "ball_movement",
+    "pixel_speed": 64.51,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 8.48,
+    "event": "ball_movement",
+    "pixel_speed": 76.95,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 8.64,
+    "event": "ball_movement",
+    "pixel_speed": 2947.09,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 8.81,
+    "event": "ball_movement",
+    "pixel_speed": 229.47,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 8.84,
+    "event": "ball_movement",
+    "pixel_speed": 15.62,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 9.11,
+    "event": "ball_movement",
+    "pixel_speed": 5704.82,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 9.21,
+    "event": "ball_movement",
+    "pixel_speed": 609.9,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 9.24,
+    "event": "ball_movement",
+    "pixel_speed": 21.34,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 9.28,
+    "event": "ball_movement",
+    "pixel_speed": 335.94,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 9.31,
+    "event": "ball_movement",
+    "pixel_speed": 396.69,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 9.34,
+    "event": "ball_movement",
+    "pixel_speed": 445.61,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 9.38,
+    "event": "ball_movement",
+    "pixel_speed": 558.55,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 9.41,
+    "event": "ball_movement",
+    "pixel_speed": 637.76,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 9.44,
+    "event": "ball_movement",
+    "pixel_speed": 216.9,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 9.48,
+    "event": "ball_movement",
+    "pixel_speed": 508.47,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 9.51,
+    "event": "ball_movement",
+    "pixel_speed": 587.64,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 9.54,
+    "event": "ball_movement",
+    "pixel_speed": 540.09,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 9.58,
+    "event": "ball_movement",
+    "pixel_speed": 385.37,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 9.61,
+    "event": "ball_movement",
+    "pixel_speed": 6093.39,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 9.64,
+    "event": "ball_movement",
+    "pixel_speed": 672.04,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 9.98,
+    "event": "ball_movement",
+    "pixel_speed": 5591.84,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 10.08,
+    "event": "ball_movement",
+    "pixel_speed": 415.98,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 10.11,
+    "event": "ball_movement",
+    "pixel_speed": 400.6,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 10.28,
+    "event": "ball_movement",
+    "pixel_speed": 4889.04,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 10.34,
+    "event": "ball_movement",
+    "pixel_speed": 581.79,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 10.38,
+    "event": "ball_movement",
+    "pixel_speed": 242.72,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 10.41,
+    "event": "ball_movement",
+    "pixel_speed": 673.16,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 10.44,
+    "event": "ball_movement",
+    "pixel_speed": 202.78,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 10.54,
+    "event": "ball_movement",
+    "pixel_speed": 2303.27,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 10.58,
+    "event": "ball_movement",
+    "pixel_speed": 251.49,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 10.84,
+    "event": "ball_movement",
+    "pixel_speed": 5704.04,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 11.04,
+    "event": "ball_movement",
+    "pixel_speed": 2570.26,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 11.08,
+    "event": "ball_movement",
+    "pixel_speed": 363.64,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 12.08,
+    "event": "ball_movement",
+    "pixel_speed": 5957.52,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 12.95,
+    "event": "ball_movement",
+    "pixel_speed": 5225.1,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 12.98,
+    "event": "ball_movement",
+    "pixel_speed": 1773.82,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 13.05,
+    "event": "ball_movement",
+    "pixel_speed": 1486.05,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 14.85,
+    "event": "ball_movement",
+    "pixel_speed": 14248.16,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 14.88,
+    "event": "ball_movement",
+    "pixel_speed": 47.33,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 14.91,
+    "event": "ball_movement",
+    "pixel_speed": 249.87,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 14.95,
+    "event": "ball_movement",
+    "pixel_speed": 271.43,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 15.82,
+    "event": "ball_movement",
+    "pixel_speed": 7208.88,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 15.88,
+    "event": "ball_movement",
+    "pixel_speed": 281.7,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 16.42,
+    "event": "ball_movement",
+    "pixel_speed": 4395.34,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 16.55,
+    "event": "ball_movement",
+    "pixel_speed": 3148.59,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 16.58,
+    "event": "ball_movement",
+    "pixel_speed": 1612.54,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 16.62,
+    "event": "ball_movement",
+    "pixel_speed": 1657.93,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 16.72,
+    "event": "ball_movement",
+    "pixel_speed": 1641.46,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 17.75,
+    "event": "ball_movement",
+    "pixel_speed": 1918.13,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 17.78,
+    "event": "ball_movement",
+    "pixel_speed": 1114.2,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 17.78,
+    "event": "ball_movement",
+    "pixel_speed": 699.99,
+    "power": "medium",
+    "haptic_pattern": "medium_double_pulse"
+  },
+  {
+    "timestamp_sec": 17.82,
+    "event": "ball_movement",
+    "pixel_speed": 237.75,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 18.02,
+    "event": "ball_movement",
+    "pixel_speed": 4337.35,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 18.05,
+    "event": "ball_movement",
+    "pixel_speed": 291.92,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 18.08,
+    "event": "ball_movement",
+    "pixel_speed": 90.98,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 18.12,
+    "event": "ball_movement",
+    "pixel_speed": 62.61,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 18.15,
+    "event": "ball_movement",
+    "pixel_speed": 102.07,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 35.84,
+    "event": "ball_movement",
+    "pixel_speed": 4807.8,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 35.87,
+    "event": "ball_movement",
+    "pixel_speed": 0.03,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 35.9,
+    "event": "ball_movement",
+    "pixel_speed": 0.02,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 35.94,
+    "event": "ball_movement",
+    "pixel_speed": 71.16,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 35.97,
+    "event": "ball_movement",
+    "pixel_speed": 51.9,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36,
+    "event": "ball_movement",
+    "pixel_speed": 36.4,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.04,
+    "event": "ball_movement",
+    "pixel_speed": 24.93,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.07,
+    "event": "ball_movement",
+    "pixel_speed": 6.48,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.1,
+    "event": "ball_movement",
+    "pixel_speed": 17.31,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.14,
+    "event": "ball_movement",
+    "pixel_speed": 31.2,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.17,
+    "event": "ball_movement",
+    "pixel_speed": 42.27,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.2,
+    "event": "ball_movement",
+    "pixel_speed": 46.18,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.24,
+    "event": "ball_movement",
+    "pixel_speed": 16.06,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.27,
+    "event": "ball_movement",
+    "pixel_speed": 24.51,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.3,
+    "event": "ball_movement",
+    "pixel_speed": 43.33,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.34,
+    "event": "ball_movement",
+    "pixel_speed": 36.69,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.37,
+    "event": "ball_movement",
+    "pixel_speed": 40.18,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.4,
+    "event": "ball_movement",
+    "pixel_speed": 13.66,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.44,
+    "event": "ball_movement",
+    "pixel_speed": 19.89,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.47,
+    "event": "ball_movement",
+    "pixel_speed": 27.02,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.5,
+    "event": "ball_movement",
+    "pixel_speed": 38.95,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.54,
+    "event": "ball_movement",
+    "pixel_speed": 41.65,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.57,
+    "event": "ball_movement",
+    "pixel_speed": 14.34,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.6,
+    "event": "ball_movement",
+    "pixel_speed": 39.19,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.64,
+    "event": "ball_movement",
+    "pixel_speed": 42.54,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.67,
+    "event": "ball_movement",
+    "pixel_speed": 42.44,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.7,
+    "event": "ball_movement",
+    "pixel_speed": 30.79,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.74,
+    "event": "ball_movement",
+    "pixel_speed": 10.52,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.77,
+    "event": "ball_movement",
+    "pixel_speed": 26.14,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.8,
+    "event": "ball_movement",
+    "pixel_speed": 30.93,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.84,
+    "event": "ball_movement",
+    "pixel_speed": 40.58,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.87,
+    "event": "ball_movement",
+    "pixel_speed": 51.77,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.9,
+    "event": "ball_movement",
+    "pixel_speed": 18.45,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.94,
+    "event": "ball_movement",
+    "pixel_speed": 25.46,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 36.97,
+    "event": "ball_movement",
+    "pixel_speed": 58.15,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37,
+    "event": "ball_movement",
+    "pixel_speed": 52.94,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.04,
+    "event": "ball_movement",
+    "pixel_speed": 46.64,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.07,
+    "event": "ball_movement",
+    "pixel_speed": 16.4,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.1,
+    "event": "ball_movement",
+    "pixel_speed": 27.67,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.14,
+    "event": "ball_movement",
+    "pixel_speed": 34.14,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.17,
+    "event": "ball_movement",
+    "pixel_speed": 34.71,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.2,
+    "event": "ball_movement",
+    "pixel_speed": 38.42,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.24,
+    "event": "ball_movement",
+    "pixel_speed": 12.84,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.27,
+    "event": "ball_movement",
+    "pixel_speed": 29.94,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.3,
+    "event": "ball_movement",
+    "pixel_speed": 39.24,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.34,
+    "event": "ball_movement",
+    "pixel_speed": 43.86,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.37,
+    "event": "ball_movement",
+    "pixel_speed": 49.01,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.4,
+    "event": "ball_movement",
+    "pixel_speed": 16.39,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.44,
+    "event": "ball_movement",
+    "pixel_speed": 30.18,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.47,
+    "event": "ball_movement",
+    "pixel_speed": 16.24,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.5,
+    "event": "ball_movement",
+    "pixel_speed": 31.49,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.54,
+    "event": "ball_movement",
+    "pixel_speed": 45.14,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.57,
+    "event": "ball_movement",
+    "pixel_speed": 15.26,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.6,
+    "event": "ball_movement",
+    "pixel_speed": 36.48,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.64,
+    "event": "ball_movement",
+    "pixel_speed": 34.95,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.67,
+    "event": "ball_movement",
+    "pixel_speed": 40.76,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 37.7,
+    "event": "ball_movement",
+    "pixel_speed": 10264.66,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 37.74,
+    "event": "ball_movement",
+    "pixel_speed": 0.05,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 38.3,
+    "event": "ball_movement",
+    "pixel_speed": 11732.21,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 38.51,
+    "event": "ball_movement",
+    "pixel_speed": 4941.59,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 38.61,
+    "event": "ball_movement",
+    "pixel_speed": 1215.65,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 38.64,
+    "event": "ball_movement",
+    "pixel_speed": 255.21,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 38.74,
+    "event": "ball_movement",
+    "pixel_speed": 1542.93,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 38.74,
+    "event": "ball_movement",
+    "pixel_speed": 394.47,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 38.84,
+    "event": "ball_movement",
+    "pixel_speed": 1841.66,
+    "power": "hard",
+    "haptic_pattern": "sharp_strong_burst"
+  },
+  {
+    "timestamp_sec": 38.87,
+    "event": "ball_movement",
+    "pixel_speed": 193.31,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 38.91,
+    "event": "ball_movement",
+    "pixel_speed": 57.68,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 38.94,
+    "event": "ball_movement",
+    "pixel_speed": 127.57,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  },
+  {
+    "timestamp_sec": 38.97,
+    "event": "ball_movement",
+    "pixel_speed": 206.3,
+    "power": "soft",
+    "haptic_pattern": "light_glide"
+  }
+]
