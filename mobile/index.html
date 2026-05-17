@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Haptic Football Player</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Haptic Football Accessibility</p>
+          <h1>Feel the movement of the game.</h1>
+        </div>
+        <div class="support" id="supportStatus">Checking haptic support...</div>
+      </section>
+
+      <section class="player-panel">
+        <video id="videoPlayer" controls playsinline preload="metadata"></video>
+
+        <div class="controls">
+          <label class="file-control">
+            <span>Video</span>
+            <input id="videoInput" type="file" accept="video/*" />
+          </label>
+          <label class="file-control">
+            <span>Events JSON</span>
+            <input id="eventsInput" type="file" accept="application/json,.json" />
+          </label>
+        </div>
+
+        <div class="actions">
+          <button id="loadDefaultButton" type="button">Load local events</button>
+          <button id="testHapticButton" type="button">Test vibration</button>
+          <label class="toggle">
+            <input id="hapticsToggle" type="checkbox" checked />
+            <span>Haptics on</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-live="polite">
+        <div>
+          <span>Total events</span>
+          <strong id="totalEvents">0</strong>
+        </div>
+        <div>
+          <span>Next event</span>
+          <strong id="nextEvent">--</strong>
+        </div>
+        <div>
+          <span>Current pattern</span>
+          <strong id="currentPattern">--</strong>
+        </div>
+      </section>
+
+      <section class="timeline-section">
+        <div class="timeline-header">
+          <h2>Haptic timeline</h2>
+          <span id="playbackTime">0.00s</span>
+        </div>
+        <div class="timeline-track" id="timelineTrack">
+          <div class="playhead" id="playhead"></div>
+        </div>
+        <ol class="event-list" id="eventList"></ol>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
