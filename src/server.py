@@ -3,10 +3,11 @@ import json
 import re
 import shutil
 import sys
+import uuid
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from threading import Lock
+from threading import Lock, Thread
 from urllib.parse import parse_qs, urlparse
 
 from analyze_video import analyze_video
@@ -17,6 +18,8 @@ OUTPUT_JSON = PROJECT_ROOT / "outputs" / "events.json"
 MAX_UPLOAD_BYTES = 2 * 1024 * 1024 * 1024
 MIN_FREE_BYTES_AFTER_UPLOAD = 512 * 1024 * 1024
 analysis_lock = Lock()
+jobs_lock = Lock()
+jobs = {}
 
 
 def safe_filename(filename):
@@ -30,11 +33,30 @@ class HapticFootballHandler(SimpleHTTPRequestHandler):
 
     def send_json(self, payload, status=HTTPStatus.OK):
         body = json.dumps(payload).encode("utf-8")
-        self.send_response(status)
-        self.send_header("Content-Type", "application/json")
-        self.send_header("Content-Length", str(len(body)))
-        self.end_headers()
-        self.wfile.write(body)
+        try:
+            self.send_response(status)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+        except BrokenPipeError:
+            print("Browser disconnected before the response was delivered.", file=sys.stderr)
+
+    def do_GET(self):
+        parsed = urlparse(self.path)
+        if parsed.path != "/api/status":
+            super().do_GET()
+            return
+
+        job_id = parse_qs(parsed.query).get("job_id", [""])[0]
+        with jobs_lock:
+            job = jobs.get(job_id)
+
+        if not job:
+            self.send_json({"error": "Analysis job was not found."}, HTTPStatus.NOT_FOUND)
+            return
+
+        self.send_json(job)
 
     def do_POST(self):
         parsed = urlparse(self.path)
@@ -52,15 +74,10 @@ class HapticFootballHandler(SimpleHTTPRequestHandler):
         available_bytes = shutil.disk_usage(PROJECT_ROOT).free
         if content_length + MIN_FREE_BYTES_AFTER_UPLOAD > available_bytes:
             available_mb = available_bytes // (1024 * 1024)
-            self.send_json(
-                {
-                    "error": (
-                        f"Not enough disk space for this video. Only {available_mb} MB is free. "
-                        "Free more space or choose a shorter clip."
-                    )
-                },
-                HTTPStatus.INSUFFICIENT_STORAGE,
-            )
+            self.send_json({"error": f"Not enough disk space for this video. Only {available_mb} MB is free. Free more space or choose a shorter clip."}, HTTPStatus.INSUFFICIENT_STORAGE)
+            return
+        if not analysis_lock.acquire(blocking=False):
+            self.send_json({"error": "Another video is already being analyzed. Try again when it finishes."}, HTTPStatus.CONFLICT)
             return
 
         requested_name = parse_qs(parsed.query).get("filename", ["uploaded-video.mp4"])[0]
@@ -77,26 +94,32 @@ class HapticFootballHandler(SimpleHTTPRequestHandler):
                     uploaded_file.write(chunk)
                     remaining -= len(chunk)
 
-            if not analysis_lock.acquire(blocking=False):
-                self.send_json({"error": "Another video is already being analyzed. Try again when it finishes."}, HTTPStatus.CONFLICT)
-                return
+            job_id = uuid.uuid4().hex
+            with jobs_lock:
+                jobs[job_id] = {"status": "processing", "filename": upload_path.name}
 
-            try:
-                events = analyze_video(upload_path, OUTPUT_JSON)
-            finally:
-                analysis_lock.release()
-
-            self.send_json(
-                {
-                    "events": events,
-                    "filename": upload_path.name,
-                    "total_events": len(events),
-                }
-            )
+            Thread(target=run_analysis_job, args=(job_id, upload_path), daemon=True).start()
+            self.send_json({"job_id": job_id, "status": "processing"}, HTTPStatus.ACCEPTED)
         except Exception as error:
+            if analysis_lock.locked():
+                analysis_lock.release()
             upload_path.unlink(missing_ok=True)
             print(f"Analysis failed: {error}", file=sys.stderr)
             self.send_json({"error": str(error)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
+def run_analysis_job(job_id, upload_path):
+    try:
+        events = analyze_video(upload_path, OUTPUT_JSON)
+        with jobs_lock:
+            jobs[job_id] = {"status": "complete", "events": events, "filename": upload_path.name, "total_events": len(events)}
+    except Exception as error:
+        upload_path.unlink(missing_ok=True)
+        print(f"Analysis failed: {error}", file=sys.stderr)
+        with jobs_lock:
+            jobs[job_id] = {"status": "error", "error": str(error)}
+    finally:
+        analysis_lock.release()
 
 
 def main():
