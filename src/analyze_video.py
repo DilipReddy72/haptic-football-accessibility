@@ -24,6 +24,8 @@ def analyze_video(video_path=VIDEO_PATH, output_json=OUTPUT_JSON):
 
     cap = cv2.VideoCapture(video_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
+    frame_width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+    frame_height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
 
     if not cap.isOpened():
         raise FileNotFoundError(f"Could not open video: {video_path}")
@@ -77,6 +79,8 @@ def analyze_video(video_path=VIDEO_PATH, output_json=OUTPUT_JSON):
                             "pixel_speed": round(pixel_speed, 2),
                             "power": power,
                             "haptic_pattern": haptic,
+                            "ball_x_ratio": round(cx / frame_width, 4) if frame_width else 0.5,
+                            "ball_y_ratio": round(cy / frame_height, 4) if frame_height else 0.5,
                         }
                     )
 
