@@ -17,7 +17,17 @@
       </section>
 
       <section class="player-panel">
-        <video id="videoPlayer" controls playsinline preload="metadata"></video>
+        <div class="video-stage">
+          <video id="videoPlayer" controls playsinline preload="metadata"></video>
+          <div class="impact-marker" id="impactMarker" aria-hidden="true">
+            <span class="impact-ring"></span>
+            <strong id="impactLabel">STRIKE</strong>
+          </div>
+          <div class="impact-readout" id="impactReadout" aria-live="polite">
+            <span>Live impact</span>
+            <strong id="impactStrength">Waiting for playback</strong>
+          </div>
+        </div>
 
         <div class="controls">
           <label class="file-control">
@@ -58,10 +68,32 @@
       <section class="timeline-section">
         <div class="timeline-header">
           <h2>Haptic timeline</h2>
-          <span id="playbackTime">0.00s</span>
+          <div class="timeline-status">
+            <div class="spike-meter" id="spikeMeter" aria-label="Live movement intensity">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <span id="playbackTime">0.00s</span>
+          </div>
         </div>
         <div class="timeline-track" id="timelineTrack">
           <div class="playhead" id="playhead"></div>
+        </div>
+        <div class="proof-panel" aria-live="polite">
+          <div class="proof-header">
+            <div>
+              <span>Live synchronized signal</span>
+              <strong id="signalLabel">Waiting for playback</strong>
+            </div>
+            <strong id="signalSpeed">0 px/s</strong>
+          </div>
+          <div class="signal-track">
+            <div class="signal-fill" id="signalFill"></div>
+          </div>
+          <div class="signal-legend">
+            <div><span class="legend-swatch soft"></span><strong>MOVE</strong><small>0-400 px/s · light glide</small></div>
+            <div><span class="legend-swatch medium"></span><strong>PASS</strong><small>401-900 px/s · double pulse</small></div>
+            <div><span class="legend-swatch hard"></span><strong>STRIKE</strong><small>Over 900 px/s · strong burst</small></div>
+          </div>
         </div>
         <ol class="event-list" id="eventList"></ol>
       </section>
