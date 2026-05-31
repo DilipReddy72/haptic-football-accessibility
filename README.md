@@ -34,6 +34,7 @@ The output is a JSON timeline that can be used by a future mobile or web haptic 
 ```text
 haptic-football-accessibility/
   src/analyze_video.py
+  src/server.py
   mobile/index.html
   mobile/app.js
   mobile/styles.css
@@ -75,32 +76,12 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-## Run
+## Run The Web App
 
-Place a football video at:
-
-```text
-data/sample.mp4
-```
-
-Then run:
+Start the analysis server:
 
 ```bash
-python src/analyze_video.py
-```
-
-The analyzer writes:
-
-```text
-outputs/events.json
-```
-
-## Haptic Player
-
-The `mobile/` folder contains a static browser prototype for playing haptic events in sync with video playback.
-
-```bash
-python3 -m http.server 8000
+python src/server.py
 ```
 
 Then open:
@@ -109,7 +90,21 @@ Then open:
 http://localhost:8000/mobile/
 ```
 
-Use the controls to choose a video file and load `outputs/events.json`. On browsers that support the Vibration API, the player maps haptic patterns to vibration sequences:
+Choose any football video and select **Analyze video**. The server uploads the selected video locally, generates a fresh haptic timeline, and sends the events back to the player automatically. The latest timeline is also written to:
+
+```text
+outputs/events.json
+```
+
+For command-line analysis without the web app, place a football video at `data/sample.mp4` and run:
+
+```bash
+python src/analyze_video.py
+```
+
+## Haptic Player
+
+The `mobile/` folder contains a browser prototype for generating and playing haptic events in sync with video playback. On browsers that support the Vibration API, the player maps haptic patterns to vibration sequences:
 
 ```text
 light_glide          -> short light vibration
@@ -119,4 +114,4 @@ sharp_strong_burst   -> strong burst
 
 ## Current Status
 
-The first end-to-end run generated a haptic event timeline from a football video. A mobile web haptic player has been added to read `outputs/events.json` and trigger matching vibration patterns during video playback.
+The first end-to-end run generated a haptic event timeline from a football video. The web player can now accept a new football video, request analysis from the local Python server, and trigger matching vibration patterns during playback without requiring the user to load a JSON file manually.
