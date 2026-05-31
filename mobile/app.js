@@ -1,9 +1,10 @@
 const video = document.querySelector("#videoPlayer");
 const videoInput = document.querySelector("#videoInput");
-const eventsInput = document.querySelector("#eventsInput");
+const analyzeButton = document.querySelector("#analyzeButton");
 const loadDefaultButton = document.querySelector("#loadDefaultButton");
 const testHapticButton = document.querySelector("#testHapticButton");
 const hapticsToggle = document.querySelector("#hapticsToggle");
+const analysisStatus = document.querySelector("#analysisStatus");
 const supportStatus = document.querySelector("#supportStatus");
 const totalEvents = document.querySelector("#totalEvents");
 const nextEvent = document.querySelector("#nextEvent");
@@ -151,11 +152,6 @@ function processDueEvents() {
   nextEvent.textContent = upcoming ? `${upcoming.timestamp_sec.toFixed(2)}s` : "--";
 }
 
-async function loadEventsFromFile(file) {
-  const text = await file.text();
-  setEvents(JSON.parse(text));
-}
-
 async function loadDefaultEvents() {
   const response = await fetch("../outputs/events.json");
   if (!response.ok) {
@@ -172,23 +168,50 @@ videoInput.addEventListener("change", () => {
 
   video.src = URL.createObjectURL(file);
   video.load();
+  setEvents([]);
+  analysisStatus.textContent = `${file.name} is ready. Select Analyze video to generate its haptic timeline.`;
 });
 
-eventsInput.addEventListener("change", async () => {
-  const file = eventsInput.files?.[0];
+analyzeButton.addEventListener("click", async () => {
+  const file = videoInput.files?.[0];
   if (!file) {
+    analysisStatus.textContent = "Choose a football video before starting analysis.";
     return;
   }
 
-  await loadEventsFromFile(file);
+  analyzeButton.disabled = true;
+  analysisStatus.textContent =
+    "Analyzing video. Longer videos can take several minutes. Keep this page open.";
+
+  try {
+    const response = await fetch(
+      `/api/analyze?filename=${encodeURIComponent(file.name)}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": file.type || "application/octet-stream" },
+        body: file,
+      },
+    );
+    const payload = await response.json();
+    if (!response.ok) {
+      throw new Error(payload.error || "Analysis could not be completed.");
+    }
+
+    setEvents(payload.events);
+    analysisStatus.textContent = `Analysis complete. Generated ${payload.total_events} haptic events from ${payload.filename}.`;
+  } catch (error) {
+    analysisStatus.textContent = `${error.message} Start the Python analysis server and try again.`;
+  } finally {
+    analyzeButton.disabled = false;
+  }
 });
 
 loadDefaultButton.addEventListener("click", async () => {
   try {
     await loadDefaultEvents();
+    analysisStatus.textContent = "Loaded the included demo timeline.";
   } catch (error) {
-    supportStatus.textContent =
-      "Could not load local events. Start a local web server or choose the JSON file manually.";
+    analysisStatus.textContent = "Could not load the included demo timeline.";
   }
 });
 
