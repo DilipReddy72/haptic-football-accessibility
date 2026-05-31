@@ -6,22 +6,33 @@ from pathlib import Path
 VIDEO_PATH = "data/sample.mp4"
 OUTPUT_JSON = "outputs/events.json"
 
-model = YOLO("yolo11n.pt")  # small starter model
+model = None
 
 
-def main():
-    Path("outputs").mkdir(exist_ok=True)
+def get_model():
+    global model
+    if model is None:
+        model = YOLO("yolo11n.pt")  # small starter model
+    return model
 
-    cap = cv2.VideoCapture(VIDEO_PATH)
+
+def analyze_video(video_path=VIDEO_PATH, output_json=OUTPUT_JSON):
+    video_path = str(video_path)
+    output_json = Path(output_json) if output_json else None
+    if output_json:
+        output_json.parent.mkdir(parents=True, exist_ok=True)
+
+    cap = cv2.VideoCapture(video_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
 
     if not cap.isOpened():
-        raise FileNotFoundError(f"Could not open video: {VIDEO_PATH}")
+        raise FileNotFoundError(f"Could not open video: {video_path}")
 
     events = []
+    detector = get_model()
 
-    results = model.track(
-        source=VIDEO_PATH,
+    results = detector.track(
+        source=video_path,
         tracker="bytetrack.yaml",
         persist=True,
         stream=True,
@@ -36,7 +47,7 @@ def main():
 
         for box in result.boxes:
             cls_id = int(box.cls[0])
-            label = model.names[cls_id]
+            label = detector.names[cls_id]
 
             # Default COCO models may detect "sports ball"
             if label == "sports ball":
@@ -73,10 +84,19 @@ def main():
 
         frame_index += 1
 
-    with open(OUTPUT_JSON, "w") as f:
-        json.dump(events, f, indent=2)
+    cap.release()
 
-    print(f"Saved {len(events)} events to {OUTPUT_JSON}")
+    if output_json:
+        with output_json.open("w") as f:
+            json.dump(events, f, indent=2)
+
+        print(f"Saved {len(events)} events to {output_json}")
+
+    return events
+
+
+def main():
+    analyze_video()
 
 
 if __name__ == "__main__":
