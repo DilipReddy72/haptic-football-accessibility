@@ -20,282 +20,30 @@ const spikeMeter = document.querySelector("#spikeMeter");
 const signalLabel = document.querySelector("#signalLabel");
 const signalSpeed = document.querySelector("#signalSpeed");
 const signalFill = document.querySelector("#signalFill");
-
-const vibrationPatterns = {
-  light_glide: [45],
-  medium_double_pulse: [70, 55, 70],
-  sharp_strong_burst: [140],
-};
-
-let events = [];
-let nextEventIndex = 0;
-let activeEventTimeout = null;
-let impactTimeout = null;
-
-function hasHapticSupport() {
-  return "vibrate" in navigator;
-}
-
-function vibrate(patternName) {
-  if (!hapticsToggle.checked || !hasHapticSupport()) {
-    return;
-  }
-
-  const pattern = vibrationPatterns[patternName] || [60];
-  navigator.vibrate(pattern);
-}
-
-function updateSupportStatus() {
-  supportStatus.textContent = hasHapticSupport()
-    ? "Haptic playback is supported in this browser. Use a mobile device for the strongest effect."
-    : "This browser does not expose vibration support. Timeline playback still works visually.";
-}
-
-function setEvents(nextEvents) {
-  events = nextEvents
-    .filter((event) => Number.isFinite(event.timestamp_sec))
-    .sort((a, b) => a.timestamp_sec - b.timestamp_sec);
-
-  nextEventIndex = 0;
-  totalEvents.textContent = String(events.length);
-  renderTimeline();
-  renderEventList();
-  syncToVideoTime();
-}
-
-function resetPlaybackMetrics() {
-  window.clearTimeout(activeEventTimeout);
-  window.clearTimeout(impactTimeout);
-  navigator.vibrate?.(0);
-
-  events = [];
-  nextEventIndex = 0;
-  totalEvents.textContent = "0";
-  nextEvent.textContent = "--";
-  currentPattern.textContent = "--";
-  playbackTime.textContent = "0.00s";
-  playhead.style.left = "0%";
-  impactStrength.textContent = "Waiting for playback";
-  signalLabel.textContent = "Waiting for playback";
-  signalSpeed.textContent = "0 px/s";
-  signalFill.className = "signal-fill";
-  signalFill.style.width = "0";
-  impactMarker.className = "impact-marker";
-  spikeMeter.className = "spike-meter";
-  timelineTrack.querySelectorAll(".event-dot").forEach((dot) => dot.remove());
-  eventList.innerHTML = "";
-}
-
-function renderTimeline() {
-  timelineTrack.querySelectorAll(".event-dot").forEach((dot) => dot.remove());
-  const duration = getTimelineDuration();
-
-  events.forEach((event) => {
-    const dot = document.createElement("span");
-    dot.className = `event-dot ${event.power || "soft"}`;
-    dot.style.left = `${Math.min((event.timestamp_sec / duration) * 100, 100)}%`;
-    dot.title = `${event.timestamp_sec}s ${event.haptic_pattern}`;
-    timelineTrack.appendChild(dot);
-  });
-}
-
-function renderEventList() {
-  eventList.innerHTML = "";
-  const visibleEvents = events.slice(0, 120);
-
-  visibleEvents.forEach((event, index) => {
-    const item = document.createElement("li");
-    item.dataset.index = String(index);
-    item.innerHTML = `
-      <strong>${event.timestamp_sec.toFixed(2)}s</strong>
-      <span>${event.haptic_pattern}</span>
-      <span class="badge ${event.power || "soft"}">${event.power || "soft"}</span>
-    `;
-    eventList.appendChild(item);
-  });
-}
-
-function getTimelineDuration() {
-  return video.duration || events.at(-1)?.timestamp_sec || 1;
-}
-
-function updatePlayhead() {
-  const duration = getTimelineDuration();
-  const progress = duration ? (video.currentTime / duration) * 100 : 0;
-  playhead.style.left = `${Math.min(Math.max(progress, 0), 100)}%`;
-  playbackTime.textContent = `${video.currentTime.toFixed(2)}s`;
-}
-
-function syncToVideoTime() {
-  while (
-    nextEventIndex < events.length &&
-    events[nextEventIndex].timestamp_sec < video.currentTime
-  ) {
-    nextEventIndex += 1;
-  }
-
-  const upcoming = events[nextEventIndex];
-  nextEvent.textContent = upcoming ? `${upcoming.timestamp_sec.toFixed(2)}s` : "--";
-}
-
-function updateActiveEvent(event) {
-  currentPattern.textContent = event.haptic_pattern;
-
-  eventList.querySelectorAll(".active").forEach((item) => {
-    item.classList.remove("active");
-  });
-
-  const activeItem = eventList.querySelector(`[data-index="${nextEventIndex}"]`);
-  if (activeItem) {
-    activeItem.classList.add("active");
-    activeItem.scrollIntoView({ block: "nearest" });
-  }
-
-  window.clearTimeout(activeEventTimeout);
-  activeEventTimeout = window.setTimeout(() => {
-    currentPattern.textContent = "--";
-  }, 600);
-}
-
-function showImpact(event) {
-  const x = Number.isFinite(event.ball_x_ratio) ? event.ball_x_ratio : 0.5;
-  const y = Number.isFinite(event.ball_y_ratio) ? event.ball_y_ratio : 0.5;
-  const power = event.power || "soft";
-  const labels = { hard: "STRIKE", medium: "PASS", soft: "MOVE" };
-  const speed = Math.round(event.pixel_speed || 0);
-
-  impactMarker.style.left = `${Math.min(Math.max(x, 0), 1) * 100}%`;
-  impactMarker.style.top = `${Math.min(Math.max(y, 0), 1) * 100}%`;
-  impactLabel.textContent = labels[power];
-  impactStrength.textContent = `${labels[power]} · ${speed} px/s`;
-  signalLabel.textContent = labels[power];
-  signalSpeed.textContent = `${speed} px/s`;
-  signalFill.className = `signal-fill ${power}`;
-  signalFill.style.width = `${Math.min(Math.max((speed / 1400) * 100, 5), 100)}%`;
-
-  impactMarker.className = "impact-marker";
-  spikeMeter.className = "spike-meter";
-  void impactMarker.offsetWidth;
-  impactMarker.classList.add("active", power);
-  spikeMeter.classList.add("active", power);
-
-  window.clearTimeout(impactTimeout);
-  impactTimeout = window.setTimeout(() => {
-    impactMarker.className = "impact-marker";
-    spikeMeter.className = "spike-meter";
-  }, 650);
-}
-
-function processDueEvents() {
-  if (video.paused || video.ended) {
-    return;
-  }
-
-  const currentTime = video.currentTime;
-  const triggerWindowSeconds = 0.08;
-
-  while (
-    nextEventIndex < events.length &&
-    events[nextEventIndex].timestamp_sec <= currentTime + triggerWindowSeconds
-  ) {
-    const event = events[nextEventIndex];
-
-    if (event.timestamp_sec >= currentTime - triggerWindowSeconds) {
-      vibrate(event.haptic_pattern);
-      updateActiveEvent(event);
-      showImpact(event);
-    }
-
-    nextEventIndex += 1;
-  }
-
-  const upcoming = events[nextEventIndex];
-  nextEvent.textContent = upcoming ? `${upcoming.timestamp_sec.toFixed(2)}s` : "--";
-}
-
-async function loadDefaultEvents() {
-  const response = await fetch("../outputs/events.json");
-  if (!response.ok) {
-    throw new Error("Could not load ../outputs/events.json");
-  }
-  setEvents(await response.json());
-}
-
-videoInput.addEventListener("change", () => {
-  const file = videoInput.files?.[0];
-  if (!file) {
-    return;
-  }
-
-  resetPlaybackMetrics();
-  video.src = URL.createObjectURL(file);
-  video.load();
-  analysisStatus.textContent = `${file.name} is ready. Select Analyze video to generate its haptic timeline.`;
-});
-
-analyzeButton.addEventListener("click", async () => {
-  const file = videoInput.files?.[0];
-  if (!file) {
-    analysisStatus.textContent = "Choose a football video before starting analysis.";
-    return;
-  }
-
-  analyzeButton.disabled = true;
-  analysisStatus.textContent =
-    "Analyzing video. Longer videos can take several minutes. Keep this page open.";
-
-  try {
-    const response = await fetch(
-      `/api/analyze?filename=${encodeURIComponent(file.name)}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": file.type || "application/octet-stream" },
-        body: file,
-      },
-    );
-    const payload = await response.json();
-    if (!response.ok) {
-      throw new Error(payload.error || "Analysis could not be completed.");
-    }
-
-    setEvents(payload.events);
-    analysisStatus.textContent = `Analysis complete. Generated ${payload.total_events} haptic events from ${payload.filename}.`;
-  } catch (error) {
-    analysisStatus.textContent = `${error.message} Start the Python analysis server and try again.`;
-  } finally {
-    analyzeButton.disabled = false;
-  }
-});
-
-loadDefaultButton.addEventListener("click", async () => {
-  try {
-    await loadDefaultEvents();
-    analysisStatus.textContent = "Loaded the included demo timeline.";
-  } catch (error) {
-    analysisStatus.textContent = "Could not load the included demo timeline.";
-  }
-});
-
-testHapticButton.addEventListener("click", () => {
-  vibrate("medium_double_pulse");
-  showImpact({
-    power: "medium",
-    pixel_speed: 650,
-    ball_x_ratio: 0.5,
-    ball_y_ratio: 0.5,
-  });
-});
-
-video.addEventListener("loadedmetadata", () => {
-  renderTimeline();
-  updatePlayhead();
-});
-
+const vibrationPatterns = { light_glide: [45], medium_double_pulse: [70, 55, 70], sharp_strong_burst: [140] };
+let events = [], nextEventIndex = 0, activeEventTimeout = null, impactTimeout = null;
+function hasHapticSupport() { return "vibrate" in navigator; }
+function vibrate(patternName) { if (hapticsToggle.checked && hasHapticSupport()) navigator.vibrate(vibrationPatterns[patternName] || [60]); }
+function updateSupportStatus() { supportStatus.textContent = hasHapticSupport() ? "Haptic playback is supported in this browser. Use a mobile device for the strongest effect." : "This browser does not expose vibration support. Timeline playback still works visually."; }
+function setEvents(nextEvents) { events = nextEvents.filter((event) => Number.isFinite(event.timestamp_sec)).sort((a, b) => a.timestamp_sec - b.timestamp_sec); nextEventIndex = 0; totalEvents.textContent = String(events.length); renderTimeline(); renderEventList(); syncToVideoTime(); }
+function resetPlaybackMetrics() { window.clearTimeout(activeEventTimeout); window.clearTimeout(impactTimeout); navigator.vibrate?.(0); events = []; nextEventIndex = 0; totalEvents.textContent = "0"; nextEvent.textContent = "--"; currentPattern.textContent = "--"; playbackTime.textContent = "0.00s"; playhead.style.left = "0%"; impactStrength.textContent = "Waiting for playback"; signalLabel.textContent = "Waiting for playback"; signalSpeed.textContent = "0 px/s"; signalFill.className = "signal-fill"; signalFill.style.width = "0"; impactMarker.className = "impact-marker"; spikeMeter.className = "spike-meter"; timelineTrack.querySelectorAll(".event-dot").forEach((dot) => dot.remove()); eventList.innerHTML = ""; }
+function renderTimeline() { timelineTrack.querySelectorAll(".event-dot").forEach((dot) => dot.remove()); const duration = getTimelineDuration(); events.forEach((event) => { const dot = document.createElement("span"); dot.className = `event-dot ${event.power || "soft"}`; dot.style.left = `${Math.min((event.timestamp_sec / duration) * 100, 100)}%`; dot.title = `${event.timestamp_sec}s ${event.haptic_pattern}`; timelineTrack.appendChild(dot); }); }
+function renderEventList() { eventList.innerHTML = ""; events.slice(0, 120).forEach((event, index) => { const item = document.createElement("li"); item.dataset.index = String(index); item.innerHTML = `<strong>${event.timestamp_sec.toFixed(2)}s</strong><span>${event.haptic_pattern}</span><span class="badge ${event.power || "soft"}">${event.power || "soft"}</span>`; eventList.appendChild(item); }); }
+function getTimelineDuration() { return video.duration || events.at(-1)?.timestamp_sec || 1; }
+function updatePlayhead() { const duration = getTimelineDuration(); const progress = duration ? (video.currentTime / duration) * 100 : 0; playhead.style.left = `${Math.min(Math.max(progress, 0), 100)}%`; playbackTime.textContent = `${video.currentTime.toFixed(2)}s`; }
+function syncToVideoTime() { while (nextEventIndex < events.length && events[nextEventIndex].timestamp_sec < video.currentTime) nextEventIndex += 1; const upcoming = events[nextEventIndex]; nextEvent.textContent = upcoming ? `${upcoming.timestamp_sec.toFixed(2)}s` : "--"; }
+function updateActiveEvent(event) { currentPattern.textContent = event.haptic_pattern; eventList.querySelectorAll(".active").forEach((item) => item.classList.remove("active")); const activeItem = eventList.querySelector(`[data-index="${nextEventIndex}"]`); if (activeItem) { activeItem.classList.add("active"); activeItem.scrollIntoView({ block: "nearest" }); } window.clearTimeout(activeEventTimeout); activeEventTimeout = window.setTimeout(() => { currentPattern.textContent = "--"; }, 600); }
+function showImpact(event) { const x = Number.isFinite(event.ball_x_ratio) ? event.ball_x_ratio : .5; const y = Number.isFinite(event.ball_y_ratio) ? event.ball_y_ratio : .5; const power = event.power || "soft"; const labels = { hard: "STRIKE", medium: "PASS", soft: "MOVE" }; const speed = Math.round(event.pixel_speed || 0); impactMarker.style.left = `${Math.min(Math.max(x, 0), 1) * 100}%`; impactMarker.style.top = `${Math.min(Math.max(y, 0), 1) * 100}%`; impactLabel.textContent = labels[power]; impactStrength.textContent = `${labels[power]} · ${speed} px/s`; signalLabel.textContent = labels[power]; signalSpeed.textContent = `${speed} px/s`; signalFill.className = `signal-fill ${power}`; signalFill.style.width = `${Math.min(Math.max((speed / 1400) * 100, 5), 100)}%`; impactMarker.className = "impact-marker"; spikeMeter.className = "spike-meter"; void impactMarker.offsetWidth; impactMarker.classList.add("active", power); spikeMeter.classList.add("active", power); window.clearTimeout(impactTimeout); impactTimeout = window.setTimeout(() => { impactMarker.className = "impact-marker"; spikeMeter.className = "spike-meter"; }, 650); }
+function processDueEvents() { if (video.paused || video.ended) return; const currentTime = video.currentTime; const triggerWindowSeconds = .08; while (nextEventIndex < events.length && events[nextEventIndex].timestamp_sec <= currentTime + triggerWindowSeconds) { const event = events[nextEventIndex]; if (event.timestamp_sec >= currentTime - triggerWindowSeconds) { vibrate(event.haptic_pattern); updateActiveEvent(event); showImpact(event); } nextEventIndex += 1; } const upcoming = events[nextEventIndex]; nextEvent.textContent = upcoming ? `${upcoming.timestamp_sec.toFixed(2)}s` : "--"; }
+async function loadDefaultEvents() { const response = await fetch("../outputs/events.json"); if (!response.ok) throw new Error("Could not load ../outputs/events.json"); setEvents(await response.json()); }
+function wait(milliseconds) { return new Promise((resolve) => window.setTimeout(resolve, milliseconds)); }
+async function waitForAnalysis(jobId) { while (true) { await wait(1500); const response = await fetch(`/api/status?job_id=${encodeURIComponent(jobId)}`); const payload = await response.json(); if (!response.ok || payload.status === "error") throw new Error(payload.error || "Analysis could not be completed."); if (payload.status === "complete") return payload; } }
+videoInput.addEventListener("change", () => { const file = videoInput.files?.[0]; if (!file) return; resetPlaybackMetrics(); video.src = URL.createObjectURL(file); video.load(); analysisStatus.textContent = `${file.name} is ready. Select Analyze video to generate its haptic timeline.`; });
+analyzeButton.addEventListener("click", async () => { const file = videoInput.files?.[0]; if (!file) { analysisStatus.textContent = "Choose a football video before starting analysis."; return; } analyzeButton.disabled = true; analysisStatus.textContent = "Analyzing video. Longer videos can take several minutes. Keep this page open."; try { const response = await fetch(`/api/analyze?filename=${encodeURIComponent(file.name)}`, { method: "POST", headers: { "Content-Type": file.type || "application/octet-stream" }, body: file }); let payload = await response.json(); if (!response.ok) throw new Error(payload.error || "Analysis could not be completed."); payload = await waitForAnalysis(payload.job_id); setEvents(payload.events); analysisStatus.textContent = `Analysis complete. Generated ${payload.total_events} haptic events from ${payload.filename}.`; } catch (error) { analysisStatus.textContent = `${error.message} Start the Python analysis server and try again.`; } finally { analyzeButton.disabled = false; } });
+loadDefaultButton.addEventListener("click", async () => { try { await loadDefaultEvents(); analysisStatus.textContent = "Loaded the included demo timeline."; } catch { analysisStatus.textContent = "Could not load the included demo timeline."; } });
+testHapticButton.addEventListener("click", () => { vibrate("medium_double_pulse"); showImpact({ power: "medium", pixel_speed: 650, ball_x_ratio: .5, ball_y_ratio: .5 }); });
+video.addEventListener("loadedmetadata", () => { renderTimeline(); updatePlayhead(); });
 video.addEventListener("play", syncToVideoTime);
 video.addEventListener("seeking", syncToVideoTime);
-video.addEventListener("timeupdate", () => {
-  updatePlayhead();
-  processDueEvents();
-});
-
+video.addEventListener("timeupdate", () => { updatePlayhead(); processDueEvents(); });
 updateSupportStatus();
