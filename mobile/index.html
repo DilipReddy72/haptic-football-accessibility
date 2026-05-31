@@ -21,23 +21,23 @@
 
         <div class="controls">
           <label class="file-control">
-            <span>Video</span>
+            <span>Football video</span>
             <input id="videoInput" type="file" accept="video/*" />
           </label>
-          <label class="file-control">
-            <span>Events JSON</span>
-            <input id="eventsInput" type="file" accept="application/json,.json" />
-          </label>
+          <button id="analyzeButton" type="button">Analyze video</button>
         </div>
 
         <div class="actions">
-          <button id="loadDefaultButton" type="button">Load local events</button>
+          <button id="loadDefaultButton" type="button">Load included demo</button>
           <button id="testHapticButton" type="button">Test vibration</button>
           <label class="toggle">
             <input id="hapticsToggle" type="checkbox" checked />
             <span>Haptics on</span>
           </label>
         </div>
+        <p class="analysis-status" id="analysisStatus" aria-live="polite">
+          Choose a football video to generate its haptic timeline.
+        </p>
       </section>
 
       <section class="stats-grid" aria-live="polite">
