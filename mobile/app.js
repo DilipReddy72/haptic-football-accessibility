@@ -13,6 +13,13 @@ const playbackTime = document.querySelector("#playbackTime");
 const timelineTrack = document.querySelector("#timelineTrack");
 const playhead = document.querySelector("#playhead");
 const eventList = document.querySelector("#eventList");
+const impactMarker = document.querySelector("#impactMarker");
+const impactLabel = document.querySelector("#impactLabel");
+const impactStrength = document.querySelector("#impactStrength");
+const spikeMeter = document.querySelector("#spikeMeter");
+const signalLabel = document.querySelector("#signalLabel");
+const signalSpeed = document.querySelector("#signalSpeed");
+const signalFill = document.querySelector("#signalFill");
 
 const vibrationPatterns = {
   light_glide: [45],
@@ -23,6 +30,7 @@ const vibrationPatterns = {
 let events = [];
 let nextEventIndex = 0;
 let activeEventTimeout = null;
+let impactTimeout = null;
 
 function hasHapticSupport() {
   return "vibrate" in navigator;
@@ -53,6 +61,29 @@ function setEvents(nextEvents) {
   renderTimeline();
   renderEventList();
   syncToVideoTime();
+}
+
+function resetPlaybackMetrics() {
+  window.clearTimeout(activeEventTimeout);
+  window.clearTimeout(impactTimeout);
+  navigator.vibrate?.(0);
+
+  events = [];
+  nextEventIndex = 0;
+  totalEvents.textContent = "0";
+  nextEvent.textContent = "--";
+  currentPattern.textContent = "--";
+  playbackTime.textContent = "0.00s";
+  playhead.style.left = "0%";
+  impactStrength.textContent = "Waiting for playback";
+  signalLabel.textContent = "Waiting for playback";
+  signalSpeed.textContent = "0 px/s";
+  signalFill.className = "signal-fill";
+  signalFill.style.width = "0";
+  impactMarker.className = "impact-marker";
+  spikeMeter.className = "spike-meter";
+  timelineTrack.querySelectorAll(".event-dot").forEach((dot) => dot.remove());
+  eventList.innerHTML = "";
 }
 
 function renderTimeline() {
@@ -126,6 +157,35 @@ function updateActiveEvent(event) {
   }, 600);
 }
 
+function showImpact(event) {
+  const x = Number.isFinite(event.ball_x_ratio) ? event.ball_x_ratio : 0.5;
+  const y = Number.isFinite(event.ball_y_ratio) ? event.ball_y_ratio : 0.5;
+  const power = event.power || "soft";
+  const labels = { hard: "STRIKE", medium: "PASS", soft: "MOVE" };
+  const speed = Math.round(event.pixel_speed || 0);
+
+  impactMarker.style.left = `${Math.min(Math.max(x, 0), 1) * 100}%`;
+  impactMarker.style.top = `${Math.min(Math.max(y, 0), 1) * 100}%`;
+  impactLabel.textContent = labels[power];
+  impactStrength.textContent = `${labels[power]} · ${speed} px/s`;
+  signalLabel.textContent = labels[power];
+  signalSpeed.textContent = `${speed} px/s`;
+  signalFill.className = `signal-fill ${power}`;
+  signalFill.style.width = `${Math.min(Math.max((speed / 1400) * 100, 5), 100)}%`;
+
+  impactMarker.className = "impact-marker";
+  spikeMeter.className = "spike-meter";
+  void impactMarker.offsetWidth;
+  impactMarker.classList.add("active", power);
+  spikeMeter.classList.add("active", power);
+
+  window.clearTimeout(impactTimeout);
+  impactTimeout = window.setTimeout(() => {
+    impactMarker.className = "impact-marker";
+    spikeMeter.className = "spike-meter";
+  }, 650);
+}
+
 function processDueEvents() {
   if (video.paused || video.ended) {
     return;
@@ -143,6 +203,7 @@ function processDueEvents() {
     if (event.timestamp_sec >= currentTime - triggerWindowSeconds) {
       vibrate(event.haptic_pattern);
       updateActiveEvent(event);
+      showImpact(event);
     }
 
     nextEventIndex += 1;
@@ -166,9 +227,9 @@ videoInput.addEventListener("change", () => {
     return;
   }
 
+  resetPlaybackMetrics();
   video.src = URL.createObjectURL(file);
   video.load();
-  setEvents([]);
   analysisStatus.textContent = `${file.name} is ready. Select Analyze video to generate its haptic timeline.`;
 });
 
@@ -217,6 +278,12 @@ loadDefaultButton.addEventListener("click", async () => {
 
 testHapticButton.addEventListener("click", () => {
   vibrate("medium_double_pulse");
+  showImpact({
+    power: "medium",
+    pixel_speed: 650,
+    ball_x_ratio: 0.5,
+    ball_y_ratio: 0.5,
+  });
 });
 
 video.addEventListener("loadedmetadata", () => {
