@@ -1,6 +1,7 @@
 import argparse
 import json
 import re
+import shutil
 import sys
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -14,6 +15,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 UPLOAD_DIR = PROJECT_ROOT / "data" / "uploads"
 OUTPUT_JSON = PROJECT_ROOT / "outputs" / "events.json"
 MAX_UPLOAD_BYTES = 2 * 1024 * 1024 * 1024
+MIN_FREE_BYTES_AFTER_UPLOAD = 512 * 1024 * 1024
 analysis_lock = Lock()
 
 
@@ -47,6 +49,19 @@ class HapticFootballHandler(SimpleHTTPRequestHandler):
         if content_length > MAX_UPLOAD_BYTES:
             self.send_json({"error": "Video is larger than the 2 GB upload limit."}, HTTPStatus.REQUEST_ENTITY_TOO_LARGE)
             return
+        available_bytes = shutil.disk_usage(PROJECT_ROOT).free
+        if content_length + MIN_FREE_BYTES_AFTER_UPLOAD > available_bytes:
+            available_mb = available_bytes // (1024 * 1024)
+            self.send_json(
+                {
+                    "error": (
+                        f"Not enough disk space for this video. Only {available_mb} MB is free. "
+                        "Free more space or choose a shorter clip."
+                    )
+                },
+                HTTPStatus.INSUFFICIENT_STORAGE,
+            )
+            return
 
         requested_name = parse_qs(parsed.query).get("filename", ["uploaded-video.mp4"])[0]
         upload_path = UPLOAD_DIR / safe_filename(requested_name)
@@ -79,6 +94,7 @@ class HapticFootballHandler(SimpleHTTPRequestHandler):
                 }
             )
         except Exception as error:
+            upload_path.unlink(missing_ok=True)
             print(f"Analysis failed: {error}", file=sys.stderr)
             self.send_json({"error": str(error)}, HTTPStatus.INTERNAL_SERVER_ERROR)
 
