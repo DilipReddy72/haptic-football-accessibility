@@ -1,5 +1,6 @@
 .venv/
 data/*.mp4
+data/uploads/
 outputs/*.json
 !outputs/events.json
 __pycache__/
